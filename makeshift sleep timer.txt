@@ -1,0 +1,29 @@
+@echo off
+title Sleep Timer
+
+echo ================================
+echo            Timer Menu
+echo ================================
+echo 1. Sleep after X minutes
+echo 2. Shut down after X minutes
+echo 3. Lock after X minutes
+echo ================================
+set /p choice=Choose an option (1-3): 
+
+set /p minutes=Enter minutes: 
+set /a seconds=%minutes% * 60
+
+echo Timer set for %minutes% minute(s). Press Ctrl+C to cancel.
+timeout /t %seconds% /nobreak >nul
+
+if "%choice%"=="1" (
+    rundll32.exe powrprof.dll,SetSuspendState 0,1,0
+)
+if "%choice%"=="2" (
+    shutdown /s /t 0
+)
+if "%choice%"=="3" (
+    rundll32.exe user32.dll,LockWorkStation
+)
+
+exit
